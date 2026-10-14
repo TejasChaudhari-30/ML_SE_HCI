@@ -1,0 +1,17 @@
+# Render Blueprint Configuration for JobShield Prediction API
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: jobshield-api
+    runtime: python
+    plan: free
+    region: oregon # or frankfurt, ohio, singapore
+    buildCommand: pip install -r api/requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: PORT
+        value: 10000

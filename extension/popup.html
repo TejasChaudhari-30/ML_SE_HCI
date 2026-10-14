@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobShield</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <img src="icons/icon48.png" alt="JobShield Logo" class="brand-icon" width="28" height="28">
+        <div class="brand-text">
+          <h1 class="brand-title">JobShield</h1>
+          <p class="brand-subtitle">Job Posting Safety Checker</p>
+        </div>
+      </div>
+      <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Toggle light or dark theme" title="Toggle theme">
+        <span id="theme-icon" class="theme-icon" aria-hidden="true">☀️</span>
+      </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Main Action Card -->
+      <section class="card main-card">
+        <div class="badge-row">
+          <span class="badge">Hybrid ML Detector</span>
+        </div>
+        <h2 class="card-heading">Check a Job Posting</h2>
+        <p class="card-description">
+          Analyze a job posting for potential fraud indicators before you apply.
+        </p>
+
+        <button id="btn-analyze-current" class="btn btn-primary" type="button">
+          <span class="btn-icon" aria-hidden="true">🔍</span>
+          <span>Analyze Current Job</span>
+        </button>
+      </section>
+
+      <!-- Manual Input Fallback (Expandable) -->
+      <section class="card manual-card">
+        <button id="toggle-manual" class="accordion-header" type="button" aria-expanded="false" aria-controls="manual-section">
+          <span class="accordion-title">
+            <span class="accordion-icon" aria-hidden="true">📋</span>
+            <span>Paste job text instead</span>
+          </span>
+          <span id="accordion-arrow" class="accordion-arrow" aria-hidden="true">▼</span>
+        </button>
+
+        <div id="manual-section" class="accordion-body hidden" role="region" aria-labelledby="toggle-manual">
+          <div id="detected-meta" class="detected-meta hidden" aria-live="polite">
+            <div class="meta-row" id="meta-title-row">
+              <span class="meta-label">Title</span>
+              <span id="detected-title" class="meta-value"></span>
+            </div>
+            <div class="meta-row" id="meta-company-row">
+              <span class="meta-label">Company</span>
+              <span id="detected-company" class="meta-value"></span>
+            </div>
+            <div class="meta-row" id="meta-location-row">
+              <span class="meta-label">Location</span>
+              <span id="detected-location" class="meta-value"></span>
+            </div>
+          </div>
+
+          <label for="job-text" class="input-label">Job Posting Text</label>
+          <textarea
+            id="job-text"
+            class="text-input"
+            rows="4"
+            placeholder="Paste job title, description, requirements, or benefits here..."
+            aria-describedby="char-count-container"
+          ></textarea>
+
+          <div id="char-count-container" class="char-count-container">
+            <span id="char-count">0</span> characters
+          </div>
+
+          <button id="btn-analyze-text" class="btn btn-primary" type="button">
+            <span class="btn-icon" aria-hidden="true">🔍</span>
+            <span>Analyze Job Text</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Prediction Result Card (populated upon analysis) -->
+      <section id="result-card" class="card result-card hidden" aria-live="polite">
+        <div class="result-header">
+          <div class="result-badge-group">
+            <span id="result-label-badge" class="result-badge">LIKELY GENUINE</span>
+            <span id="result-risk-badge" class="risk-badge">Low Risk</span>
+          </div>
+          <div id="result-conf-score" class="result-conf-score">--%</div>
+        </div>
+
+        <!-- Confidence Meter -->
+        <div class="conf-meter-container">
+          <div class="conf-meter-labels">
+            <span>Model Confidence</span>
+            <span id="result-meter-text">--%</span>
+          </div>
+          <div class="conf-meter-track">
+            <div id="result-meter-fill" class="conf-meter-fill"></div>
+          </div>
+        </div>
+
+        <!-- Explanation Summary -->
+        <div class="result-explanation">
+          <div class="explanation-title">
+            <span aria-hidden="true">💡</span>
+            <span>Summary Explanation</span>
+          </div>
+          <p id="result-explanation-text" class="explanation-text"></p>
+        </div>
+
+        <!-- Key Indicator Signals -->
+        <div id="result-indicators" class="result-indicators"></div>
+      </section>
+
+      <!-- Accessible Status Area -->
+      <div id="status-card" class="status-card status-neutral" role="status" aria-live="polite">
+        <span id="status-icon" class="status-icon" aria-hidden="true">🛡️</span>
+        <span id="status-message" class="status-message">Ready to check a job posting.</span>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p class="disclaimer-text">
+        JobShield provides a screening assessment, not a guarantee of legitimacy.
+      </p>
+    </footer>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
